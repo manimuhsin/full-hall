@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ku" dir="rtl" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیستەمی هۆڵی تاقیکردنەوەکان - دیزاینی نوێ</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --primary-hover-color: #0056b3;
+            /* --secondary-color: #28a745; */ /* Kept if needed later */
+            /* --secondary-hover-color: #1e7e34; */
+            --background-gradient-start: #eef1f5; /* Kept for potential future use, but not active */
+            --background-gradient-end: #f8f9fa; /* Kept for potential future use, but not active */
+            --container-bg: #ffffff;
+            --text-color-dark: #212529;
+            --text-color-light: #6c757d;
+            --border-color: #dee2e6;
+            --box-shadow-color: rgba(0, 0, 0, 0.08);
+            --switch-bg: #ccc;
+            --switch-indicator-bg: white;
+            --switch-icon-color: #ffc107;
+            --body-bg-color: #f8f9fa; /* Base background color */
+            /* --- New Subtle Pattern for Light Mode --- */
+            /* Tiny dots pattern - light gray */
+            --body-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23cccccc' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #0d6efd;
+            --primary-hover-color: #3b8bff;
+            /* --secondary-color: #198754; */
+            /* --secondary-hover-color: #20c997; */
+            --background-gradient-start: #1a1a2e; /* Kept for potential future use, but not active */
+            --background-gradient-end: #16213e; /* Kept for potential future use, but not active */
+            --container-bg: #2c303a;
+            --text-color-dark: #e9ecef;
+            --text-color-light: #adb5bd;
+            --border-color: #495057;
+            --box-shadow-color: rgba(0, 0, 0, 0.4);
+            --switch-bg: #555;
+            --switch-indicator-bg: #444;
+            --switch-icon-color: #e9ecef;
+            --body-bg-color: #181a1e; /* Base background color */
+            /* --- New Subtle Pattern for Dark Mode --- */
+            /* Same tiny dots pattern - darker gray */
+            --body-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23444444' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Consider a Kurdish font */
+        }
+
+        body {
+            /* Removed the linear-gradient background */
+            /* background: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%); */
+
+            /* --- Apply the new background pattern --- */
+            background-color: var(--body-bg-color); /* Base color (important for transition and fallback) */
+            background-image: var(--body-bg-pattern); /* Apply the pattern using the CSS variable */
+            background-attachment: fixed; /* Keep pattern fixed during scroll */
+            background-size: auto; /* Or specify size like '8px 8px' if needed */
+
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease; /* Transition the base color smoothly */
+        }
+
+        /* Theme Toggle Switch Styles (remain the same) */
+        .theme-switch-wrapper {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+        }
+        .theme-switch { display: inline-block; height: 28px; position: relative; width: 55px; margin-left: 10px; }
+        .theme-switch input { display:none; }
+        .slider { background-color: var(--switch-bg); bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; }
+        .slider:before { background-color: var(--switch-indicator-bg); bottom: 4px; content: ""; height: 20px; left: 4px; position: absolute; transition: .4s; width: 20px; border-radius: 50%; }
+        input:checked + .slider:before { transform: translateX(27px); }
+        .theme-switch-wrapper i { color: var(--switch-icon-color); transition: color 0.4s ease; font-size: 1.2rem; }
+        [data-theme="light"] .fa-moon { display: none; }
+        [data-theme="dark"] .fa-sun { display: none; }
+
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--container-bg);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px var(--box-shadow-color);
+            padding: 40px 50px;
+            margin-bottom: 30px;
+            text-align: center;
+            z-index: 1; /* Keeps container visually distinct */
+            position: relative;
+            transition: background-color 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: clamp(26px, 5vw, 32px);
+            color: var(--text-color-dark);
+            margin-bottom: 15px;
+            font-weight: 600;
+            transition: color 0.4s ease;
+        }
+         h1 i {
+             color: var(--primary-color);
+             margin-right: 8px;
+             transition: color 0.4s ease;
+         }
+
+        .subtitle {
+            font-size: clamp(16px, 3vw, 18px);
+            color: var(--text-color-light);
+            margin-bottom: 40px;
+            transition: color 0.4s ease;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+         .btn i {
+             font-size: 1.1em;
+             line-height: 1;
+         }
+
+        .btn:hover, .btn:focus-visible {
+            background-color: var(--primary-hover-color);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 15px var(--box-shadow-color);
+        }
+
+        .btn:focus { outline: none; }
+        .btn:focus-visible {
+             outline: 3px solid var(--primary-hover-color);
+             outline-offset: 2px;
+         }
+
+        footer {
+            width: 100%;
+            max-width: 800px;
+            text-align: center;
+            padding: 20px;
+            color: var(--text-color-light);
+            font-size: 14px; /* Keep font size appropriate */
+            margin-top: 20px;
+            transition: color 0.4s ease;
+            z-index: 1;
+            position: relative;
+             /* Ensure footer text is selectable */
+             user-select: text;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+             .container { padding: 30px 25px; }
+             .buttons { grid-template-columns: 1fr; gap: 15px; }
+             .theme-switch-wrapper { top: 15px; left: 15px; }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 24px; }
+            .subtitle { font-size: 15px; }
+             .container { padding: 25px 20px; }
+            .btn { padding: 14px 20px; font-size: 16px; }
+            footer { font-size: 13px; } /* Slightly smaller footer text on mobile */
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Theme Switcher -->
+    <div class="theme-switch-wrapper">
+        <i class="fas fa-sun"></i>
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider"></div>
+        </label>
+         <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-university"></i> سیستەمی دروستکردنی نەخشەی دانیشتنی هۆڵی تاقیکردنەوە</h1>
+            <p class="subtitle">سیستەمی یەکگرتوو بۆ ڕێکخستنی هۆڵەکانی تاقیکردنەوە </p>
+        </header>
+
+        <div class="buttons">
+            <button class="btn" onclick="location.href='https://hall-basic.netlify.app/';">
+                <i class="fas fa-child"></i> قۆناغی بنەڕەتی
+            </button>
+            <button class="btn" onclick="location.href='https://hall-hischool.netlify.app/';">
+                <i class="fas fa-graduation-cap"></i> قۆناغی ئامادەیی
+            </button>
+            <button class="btn" onclick="location.href='https://hall-azmooni.netlify.app/';">
+                 <i class="fas fa-scroll"></i> تاقیکردنەوەی وزاری
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <!-- Updated Footer Content -->
+        <p>Developer: Mohsin Mohammed | Copyright © 2025</p>
+        <P> Muhsen94@gmail.com</p>
+    </footer>
+
+    <script>
+        // Dark/Light Mode Toggle Logic (Remains the same)
+        const themeToggle = document.getElementById('checkbox');
+        const htmlElement = document.documentElement;
+        const currentTheme = localStorage.getItem('theme');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        function applyTheme(theme) {
+            htmlElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            themeToggle.checked = (theme === 'dark');
+        }
+
+        if (currentTheme) {
+            applyTheme(currentTheme);
+        } else if (prefersDarkScheme.matches) {
+            applyTheme('dark');
+        } else {
+            applyTheme('light');
+        }
+
+        prefersDarkScheme.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                 applyTheme(e.matches ? 'dark' : 'light');
+             }
+        });
+
+        themeToggle.addEventListener('change', function() {
+            applyTheme(this.checked ? 'dark' : 'light');
+        });
+
+        // No dynamic year script needed anymore
+    </script>
+</body>
+</html>
