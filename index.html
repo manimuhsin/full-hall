@@ -34,8 +34,12 @@
             --switch-icon-color: #ffc107;
             --body-bg-color: #f8f9fa; /* Base background color */
             /* --- New Subtle Pattern for Light Mode --- */
-            /* Tiny dots pattern - light gray */
             --body-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23cccccc' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+        
+            /* --- گۆڕاوەکانی نوێ بۆ شێوازی زیکری ئۆفلاین --- */
+            --dhikr-overlay-backdrop: rgba(248, 249, 250, 0.85); /* بۆ پاشبنەمای ڕوون لەسەر لایتی مۆد */
+            --dhikr-text-bg: rgba(0, 0, 0, 0.03); /* پاشبنەمایەکی کاڵ بۆ بۆکسی دەقی زیکر */
+            --dhikr-pulse-color: rgba(0, 123, 255, 0.3); /* ڕەنگی پرایمەری لەگەڵ ڕوونی بۆ ئەنیمەیشنی پەلپە */
         }
 
         [data-theme="dark"] {
@@ -55,8 +59,12 @@
             --switch-icon-color: #e9ecef;
             --body-bg-color: #181a1e; /* Base background color */
             /* --- New Subtle Pattern for Dark Mode --- */
-            /* Same tiny dots pattern - darker gray */
             --body-bg-pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23444444' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+        
+            /* --- گۆڕاوەکانی نوێ بۆ شێوازی زیکری ئۆفلاین --- */
+            --dhikr-overlay-backdrop: rgba(24, 26, 30, 0.85); /* بۆ پاشبنەمای ڕوون لەسەر دارک مۆد */
+            --dhikr-text-bg: rgba(255, 255, 255, 0.05); /* پاشبنەمایەکی کاڵ بۆ بۆکسی دەقی زیکر */
+            --dhikr-pulse-color: rgba(13, 110, 253, 0.4); /* ڕەنگی پرایمەری (دارک مۆد) لەگەڵ ڕوونی بۆ ئەنیمەیشنی پەلپە */
         }
 
         * {
@@ -67,15 +75,10 @@
         }
 
         body {
-            /* Removed the linear-gradient background */
-            /* background: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%); */
-
-            /* --- Apply the new background pattern --- */
-            background-color: var(--body-bg-color); /* Base color (important for transition and fallback) */
-            background-image: var(--body-bg-pattern); /* Apply the pattern using the CSS variable */
-            background-attachment: fixed; /* Keep pattern fixed during scroll */
-            background-size: auto; /* Or specify size like '8px 8px' if needed */
-
+            background-color: var(--body-bg-color); 
+            background-image: var(--body-bg-pattern); 
+            background-attachment: fixed; 
+            background-size: auto; 
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -85,10 +88,9 @@
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
-            transition: background-color 0.4s ease; /* Transition the base color smoothly */
+            transition: background-color 0.4s ease; 
         }
 
-        /* Theme Toggle Switch Styles (remain the same) */
         .theme-switch-wrapper {
             position: fixed;
             top: 20px;
@@ -116,7 +118,7 @@
             padding: 40px 50px;
             margin-bottom: 30px;
             text-align: center;
-            z-index: 1; /* Keeps container visually distinct */
+            z-index: 1; 
             position: relative;
             transition: background-color 0.4s ease, box-shadow 0.4s ease;
             border: 1px solid var(--border-color);
@@ -194,16 +196,14 @@
             text-align: center;
             padding: 20px;
             color: var(--text-color-light);
-            font-size: 14px; /* Keep font size appropriate */
+            font-size: 14px; 
             margin-top: 20px;
             transition: color 0.4s ease;
             z-index: 1;
             position: relative;
-             /* Ensure footer text is selectable */
              user-select: text;
         }
 
-        /* Responsive Adjustments */
         @media (max-width: 768px) {
              .container { padding: 30px 25px; }
              .buttons { grid-template-columns: 1fr; gap: 15px; }
@@ -215,7 +215,7 @@
             .subtitle { font-size: 15px; }
              .container { padding: 25px 20px; }
             .btn { padding: 14px 20px; font-size: 16px; }
-            footer { font-size: 13px; } /* Slightly smaller footer text on mobile */
+            footer { font-size: 13px; } 
         }
 
     </style>
@@ -252,13 +252,12 @@
     </div>
 
     <footer>
-        <!-- Updated Footer Content -->
         <p>Developer: Mohsin Mohammed | Copyright © 2025</p>
         <P> Muhsen94@gmail.com</p>
     </footer>
 
     <script>
-        // Dark/Light Mode Toggle Logic (Remains the same)
+        // Dark/Light Mode Toggle Logic
         const themeToggle = document.getElementById('checkbox');
         const htmlElement = document.documentElement;
         const currentTheme = localStorage.getItem('theme');
@@ -287,8 +286,303 @@
         themeToggle.addEventListener('change', function() {
             applyTheme(this.checked ? 'dark' : 'light');
         });
-
-        // No dynamic year script needed anymore
     </script>
+
+    <!-- سکریپتی زیکری ئۆفلاین دەست پێدەکات -->
+    <script>
+    (function() {
+        'use strict';
+        
+        // CSS بۆ ستایلی زیکرەکە (گونجێنراوە لەگەڵ دیزاینی index(10).html)
+        const dhikrCSS = `
+            <style id="dhikr-offline-styles">
+                .dhikr-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: var(--dhikr-overlay-backdrop); /* گۆڕاوی CSS بۆ پاشبنەما */
+                    backdrop-filter: blur(8px); /* زیادکردنی بلور بۆ جوانکاری */
+                    z-index: 999999;
+                    display: none; /* لە سەرەتادا شاردراوە */
+                    justify-content: center;
+                    align-items: center;
+                    font-family: inherit; /* وەرگرتنی فۆنت لە body */
+                    direction: rtl; /* بۆ زمانی کوردی */
+                    padding: 15px; /* بۆشایی لە لێوارەکانەوە بۆ مۆبایل */
+                }
+                
+                .dhikr-container {
+                    text-align: center;
+                    padding: 30px 40px; /* گونجاندنی پادینگ */
+                    background-color: var(--container-bg); /* بەکارهێنانی ڕەنگی کۆنتەینەری سەرەکی */
+                    border-radius: 12px; /* وەک کۆنتەینەری سەرەکی */
+                    border: 1px solid var(--border-color); /* وەک کۆنتەینەری سەرەکی */
+                    box-shadow: 0 10px 30px var(--box-shadow-color); /* سێبەری گەورەتر بۆ مۆداڵ */
+                    max-width: 500px;
+                    width: 100%; /* بۆ ئەوەی لەناو پادینگی دەرەوەییدا بگونجێت */
+                    animation: dhikrFadeIn 0.6s ease-out;
+                    color: var(--text-color-dark); /* ڕەنگی دەقی سەرەکی */
+                }
+                
+                .dhikr-title {
+                    font-size: clamp(20px, 4vw, 26px); /* گونجاندنی قەبارەی فۆنت */
+                    margin-bottom: 25px;
+                    color: var(--primary-color); /* بەکارهێنانی ڕەنگی سەرەکی ماڵپەڕ */
+                    font-weight: 600;
+                    text-shadow: none; /* لابردنی سێبەری دەق */
+                }
+                
+                .dhikr-text {
+                    font-size: clamp(26px, 5.5vw, 34px); /* گەورەکردنی فۆنتی زیکر */
+                    margin: 20px 0;
+                    padding: 20px;
+                    background-color: var(--dhikr-text-bg); /* پاشبنەمایەکی کاڵ بۆ جیاکردنەوە */
+                    border-radius: 8px; /* وەک دوگمەکان */
+                    border: 1px solid var(--border-color);
+                    text-shadow: none;
+                    color: var(--text-color-dark);
+                    animation: dhikrPulse 2.5s ease-in-out infinite;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    line-height: 1.5;
+                    word-break: break-word; /* بۆ ئەوەی دەقە درێژەکان نەچنە دەرەوە */
+                }
+                
+                .dhikr-text:hover {
+                    border-color: var(--primary-color);
+                    transform: scale(1.03); /* کەمێک گەورەبوون لە کاتی hover */
+                    box-shadow: 0 0 15px color-mix(in srgb, var(--primary-color) 20%, transparent);
+                }
+                
+                .dhikr-counter {
+                    font-size: 16px;
+                    margin: 15px 0;
+                    color: var(--text-color-light);
+                    background-color: transparent; 
+                    padding: 8px 15px;
+                    border-radius: 20px; 
+                    display: inline-block;
+                }
+                
+                .dhikr-status {
+                    font-size: 15px;
+                    margin-top: 15px;
+                    color: var(--text-color-light); 
+                    animation: dhikrBlink 1.5s ease-in-out infinite;
+                }
+                
+                .dhikr-buttons {
+                    margin-top: 25px;
+                    display: flex; 
+                    gap: 15px; 
+                    justify-content: center; 
+                }
+                
+                .dhikr-btn {
+                    padding: 12px 20px; 
+                    background-color: var(--primary-color);
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    font-size: 16px; 
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    text-align: center;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                    text-decoration: none;
+                    box-shadow: 0 2px 5px var(--box-shadow-color); 
+                }
+                
+                .dhikr-btn:hover, .dhikr-btn:focus-visible {
+                    background-color: var(--primary-hover-color);
+                    transform: translateY(-2px) scale(1.02); 
+                    box-shadow: 0 6px 12px var(--box-shadow-color); 
+                }
+                                
+                @keyframes dhikrFadeIn {
+                    from {
+                        opacity: 0;
+                        transform: scale(0.9) translateY(30px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: scale(1) translateY(0);
+                    }
+                }
+                
+                @keyframes dhikrPulse {
+                    0%, 100% {
+                        transform: scale(1);
+                        box-shadow: 0 0 10px color-mix(in srgb, var(--dhikr-pulse-color) 50%, transparent);
+                    }
+                    50% {
+                        transform: scale(1.015); 
+                        box-shadow: 0 0 20px var(--dhikr-pulse-color);
+                    }
+                }
+                
+                @keyframes dhikrBlink {
+                    0%, 50%, 100% {
+                        opacity: 1;
+                    }
+                    25%, 75% {
+                        opacity: 0.6; 
+                    }
+                }
+                
+                @media (max-width: 480px) {
+                    .dhikr-container {
+                        padding: 20px 25px; 
+                        /* width: 95%; لابرا چونکە پادینگ لە دەرەوەی زیادکرا */
+                    }
+                    .dhikr-title {
+                        font-size: clamp(18px, 5vw, 22px); 
+                        margin-bottom: 20px;
+                    }
+                    .dhikr-text {
+                        font-size: clamp(22px, 6vw, 28px); 
+                        padding: 15px;
+                    }
+                    .dhikr-btn {
+                        padding: 10px 18px;
+                        font-size: 15px;
+                        flex-grow: 1; /* بۆ ئەوەی دوگمەکان پانی یەکسان وەربگرن لە حاڵەتی ستوونیدا */
+                    }
+                     .dhikr-buttons {
+                        flex-direction: column; 
+                        gap: 10px;
+                    }
+                }
+            </style>
+        `;
+        
+        // زیادکردنی CSS بە document
+        document.head.insertAdjacentHTML('beforeend', dhikrCSS);
+        
+        const dhikrList = [
+            'سُبْحَانَ اللَّهِ',
+            'اللَّهُ أَكْبَرُ',
+            'الْحَمْدُ لِلَّهِ',
+            'لَا إِلَهَ إِلَّا اللَّهُ',
+            'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
+            'سُبْحَانَ اللَّهِ الْعَظِيمِ',
+            'أَسْتَغْفِرُ اللَّهَ',
+            'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ'
+        ];
+        
+        let currentDhikrIndex = 0;
+        let dhikrCount = 0;
+        let isOffline = false;
+        
+        const dhikrHTML = `
+            <div id="dhikr-overlay" class="dhikr-overlay">
+                <div class="dhikr-container">
+                    <div class="dhikr-title">هێڵی ئینتەرنێت پچڕاوە - کاتی زیکر</div>
+                    <div id="dhikr-text" class="dhikr-text" role="button" tabindex="0" aria-label="کرتە بکە بۆ ژماردنی زیکر">${dhikrList[0]}</div>
+                    <div id="dhikr-counter" class="dhikr-counter">ژمارە: <span id="count">${dhikrCount}</span></div>
+                    <div class="dhikr-status">🔴 ئۆفلاین</div>
+                    <div class="dhikr-buttons">
+                        <button id="dhikr-next" class="dhikr-btn"><i class="fas fa-arrow-right"></i> زیکری داهاتوو</button>
+                        <button id="dhikr-reset" class="dhikr-btn"><i class="fas fa-undo"></i> ژمارە سفر بکەرەوە</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', dhikrHTML);
+        
+        const overlay = document.getElementById('dhikr-overlay');
+        const dhikrTextEl = document.getElementById('dhikr-text');
+        const countSpan = document.getElementById('count');
+        const nextBtn = document.getElementById('dhikr-next');
+        const resetBtn = document.getElementById('dhikr-reset');
+        
+        function showDhikr() {
+            if (!isOffline) {
+                isOffline = true;
+                overlay.style.display = 'flex';
+                updateDhikrDisplay();
+            }
+        }
+        
+        function hideDhikr() {
+            if (isOffline) {
+                isOffline = false;
+                overlay.style.display = 'none';
+            }
+        }
+        
+        function updateDhikrDisplay() {
+            dhikrTextEl.textContent = dhikrList[currentDhikrIndex];
+            countSpan.textContent = dhikrCount;
+        }
+        
+        dhikrTextEl.addEventListener('click', function() {
+            dhikrCount++;
+            updateDhikrDisplay();
+            this.style.transform = 'scale(0.97)';
+            setTimeout(() => {
+                this.style.transform = 'scale(1)';
+            }, 100);
+        });
+
+        dhikrTextEl.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                dhikrCount++;
+                updateDhikrDisplay();
+                this.style.transform = 'scale(0.97)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 100);
+            }
+        });
+
+        nextBtn.addEventListener('click', function() {
+            currentDhikrIndex = (currentDhikrIndex + 1) % dhikrList.length;
+            dhikrCount = 0;
+            updateDhikrDisplay();
+        });
+        
+        resetBtn.addEventListener('click', function() {
+            dhikrCount = 0;
+            updateDhikrDisplay();
+        });
+        
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                hideDhikr();
+            } else {
+                showDhikr();
+            }
+        }
+        
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        
+        updateOnlineStatus(); // Initial check
+        
+        window.testOfflineDhikr = function() { // For testing
+            showDhikr();
+            console.log('تاقیکردنەوەی مۆدی زیکری ئۆفلاین چالاک کرا.');
+        };
+        
+        window.hideOfflineDhikr = function() { // For testing
+            hideDhikr();
+            console.log('مۆدی زیکری ئۆفلاین شاردراوە.');
+        };
+        
+        console.log('کۆدی زیکری ئۆفلاین (گونجێنراو) لۆد بوو ✅');
+        
+    })();
+    </script>
+    <!-- سکریپتی زیکری ئۆفلاین کۆتایی دێت -->
+
 </body>
 </html>
